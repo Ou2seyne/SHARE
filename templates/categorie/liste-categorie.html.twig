@@ -10,7 +10,7 @@
             Liste des catégories
         </h1>
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 bg-white p-4 m-0 text-primary">
+            <div class="col-12 col-md-8 bg-primary p-4 m-0 text-primary">
                 <div class="table-responsive">
                     {{ form_start(form) }}
                     <table class="table table-hover">
@@ -26,13 +26,13 @@
                             {% for categorie in categories |sort((a, b) => a.libelle <=> b.libelle) %}
                                 <tr class="{{ cycle(['table-primary', 'table-secondary'], loop.index0) }}">
                                     <td>{{ categorie.libelle | capitalize }}
-                                    <td><a href="{{path("app_modifier_sous_categorie",{'id':categorie.id})}}">{% if categorie.scategories | length > 0 %}
-                                            <ul>
                                                 {% for sc in categorie.scategories |sort((a, b) => a.numero <=> b.numero) %}
+                                                <td><a href="{{path("app_modifier_sous_categorie",{'id':categorie.id})}}">{% if categorie.scategories | length > 0 %}
+                                            <ul>
                                                     <li>{{sc.numero}} - {{sc.libelle | capitalize }}</li>
+                                                    {% endif %}</a></td>
                                                 {% endfor %}
-                                            </ul>
-                                        {% endif %}</a></td>
+
                                     <td><a href="{{path("app_modifier_categorie",{'id':categorie.id})}}"><i class="bi bi-pen-fill text-dark"></i></a></td>
                                     <td><a href="{{path("app_supprimer_categorie",{'id':categorie.id})}}"><i class="bi bi-trash-fill text-dark"></i></a></td>
                                     <td>

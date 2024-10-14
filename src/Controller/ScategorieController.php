@@ -49,7 +49,7 @@ class ScategorieController extends AbstractController
             return $this->redirectToRoute('app_liste_categories');
         }
 
-        return $this->render('scategorie/liste-scategorie.html.twig', [
+        return $this->render('scategorie/modifier-scategorie.html.twig', [
             'form' => $form->createView(),
             'scategorie' => $scategorie,
         ]);

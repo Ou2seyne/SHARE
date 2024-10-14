@@ -23,19 +23,23 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // Encode le mot de passe
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
-
+        
+            // Définir la date d'envoi
+            $user->setDateEnvoi(new \DateTime()); // Définit la date d'envoi à l'heure actuelle
+        
+            // Persister l'utilisateur
             $entityManager->persist($user);
             $entityManager->flush();
-
-            // do anything else you need here, like send an email
-
+        
+            // Faites tout autre traitement nécessaire ici, comme envoyer un e-mail
+        
             return $security->login($user, AppCustomAuthenticator::class, 'main');
         }
 

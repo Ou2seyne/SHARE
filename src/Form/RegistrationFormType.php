@@ -17,43 +17,55 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('email', EmailType::class, ['attr' => ['class'=> 'form-control','placeholder' => 'Votre Email'],
-            'label_attr' => ['class'=> 'fw-bold']])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'label_attr' => ['class'=> 'fw-bold'],
-                'attr' => ['autocomplete' => 'new-password','class'=> 'form-control','placeholder' => 'Votre mot de passe (Min 6 caractère)'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
-        ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
+{
+    $builder
+        ->add('email', EmailType::class, [
+            'attr' => ['class' => 'form-control', 'placeholder' => 'Votre Email'],
+            'label_attr' => ['class' => 'fw-bold'],
+        ])
+        ->add('nom', TextType::class, [ // Ajout du champ nom
+            'attr' => ['class' => 'form-control', 'placeholder' => 'Votre nom'],
+            'label_attr' => ['class' => 'fw-bold'],
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Please enter your name',
+                ]),
+            ],
+        ])
+        ->add('prenom', TextType::class, [ // Ajout du champ prenom
+            'attr' => ['class' => 'form-control', 'placeholder' => 'Votre prénom'],
+            'label_attr' => ['class' => 'fw-bold'],
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Please enter your first name',
+                ]),
+            ],
+        ])
+        ->add('agreeTerms', CheckboxType::class, [
+            'mapped' => false,
+            'constraints' => [
+                new IsTrue([
+                    'message' => 'You should agree to our terms.',
+                ]),
+            ],
+        ])
+        ->add('plainPassword', PasswordType::class, [
+            // instead of being set onto the object directly,
+            // this is read and encoded in the controller
+            'mapped' => false,
+            'label_attr' => ['class' => 'fw-bold'],
+            'attr' => ['autocomplete' => 'new-password', 'class' => 'form-control', 'placeholder' => 'Votre mot de passe (Min 6 caractère)'],
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Please enter a password',
+                ]),
+                new Length([
+                    'min' => 6,
+                    'minMessage' => 'Your password should be at least {{ limit }} characters',
+                    // max length allowed by Symfony for security reasons
+                    'max' => 4096,
+                ]),
+            ],
         ]);
-    }
+}
 }
