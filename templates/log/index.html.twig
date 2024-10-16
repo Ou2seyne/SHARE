@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Logs{% endblock %}
+
+{% block body %}
+<h1>Logs</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Message</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+            <tr>
+                <td>{{ log.id }}</td>
+                <td>{{ log.type }}</td>
+                <td>{{ log.message }}</td>
+                <td>{{ log.date|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

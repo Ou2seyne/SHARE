@@ -42,15 +42,15 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
         );
     }
 
+    // Add the $firewallName parameter here
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // Check if there's a target path stored in the session
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            // If so, redirect the user to that path
             return new RedirectResponse($targetPath);
         }
 
-        // If there's no target path stored, redirect the user to a default location
+        // Default redirection
         return new RedirectResponse($this->urlGenerator->generate('app_accueil'));
     }
 

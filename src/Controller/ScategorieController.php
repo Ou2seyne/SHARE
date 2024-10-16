@@ -54,4 +54,14 @@ class ScategorieController extends AbstractController
             'scategorie' => $scategorie,
         ]);
     }
+
+    #[Route('/sous-categories', name: 'scategorie_liste')]
+    public function liste(EntityManagerInterface $em): Response
+    {
+        $scategories = $em->getRepository(Scategorie::class)->findAll();
+
+        return $this->render('scategorie/liste.html.twig', [
+            'scategories' => $scategories,
+        ]);
+    }
 }

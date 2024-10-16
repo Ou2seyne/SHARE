@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Sous-Catégories{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-4">Liste des Sous-Catégories</h1>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Libellé</th>
+                    <th>Numéro</th>
+                    <th>Catégorie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for scategorie in scategories %}
+                    <tr>
+                        <td>{{ scategorie.id }}</td>
+                        <td>{{ scategorie.libelle }}</td>
+                        <td>{{ scategorie.numero }}</td>
+                        <td>{{ scategorie.categorie.libelle }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">Aucune sous-catégorie trouvée.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

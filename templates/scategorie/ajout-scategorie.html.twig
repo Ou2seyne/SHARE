@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Sous-Catégorie{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-4">Ajouter une Sous-Catégorie</h1>
+
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.libelle) }}
+                {{ form_widget(form.libelle) }}
+                {{ form_errors(form.libelle) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.numero) }}
+                {{ form_widget(form.numero) }}
+                {{ form_errors(form.numero) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.categorie) }}
+                {{ form_widget(form.categorie) }}
+                {{ form_errors(form.categorie) }}
+            </div>
+
+            <div class="text-center">
+                {{ form_widget(form.envoyer) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -26,9 +26,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
     #[ORM\Column]
     private ?string $password = null;
 
@@ -41,12 +38,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $prenom = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Fichier::class)]
-    private Collection $fichiers;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: LoginLog::class)]
+    private Collection $loginLogs;
 
     public function __construct()
     {
-        $this->fichiers = new ArrayCollection();
+        $this->loginLogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,42 +59,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
-
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -106,17 +88,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // Clear temporary sensitive data here
     }
 
     public function getDateEnvoi(): ?\DateTimeInterface
@@ -127,7 +104,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateEnvoi(\DateTimeInterface $dateEnvoi): static
     {
         $this->dateEnvoi = $dateEnvoi;
-
         return $this;
     }
 
@@ -135,18 +111,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->nom;
     }
-    
+
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
         return $this;
     }
-    
+
     public function getPrenom(): ?string
     {
         return $this->prenom;
     }
-    
+
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
@@ -154,29 +130,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Fichier>
+     * @return Collection<int, LoginLog>
      */
-    public function getFichiers(): Collection
+    public function getLoginLogs(): Collection
     {
-        return $this->fichiers;
+        return $this->loginLogs;
     }
 
-    public function addFichier(Fichier $fichier): static
+    public function addLoginLog(LoginLog $loginLog): static
     {
-        if (!$this->fichiers->contains($fichier)) {
-            $this->fichiers->add($fichier);
-            $fichier->setUser($this);
+        if (!$this->loginLogs->contains($loginLog)) {
+            $this->loginLogs->add($loginLog);
+            $loginLog->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeFichier(Fichier $fichier): static
+    public function removeLoginLog(LoginLog $loginLog): static
     {
-        if ($this->fichiers->removeElement($fichier)) {
+        if ($this->loginLogs->removeElement($loginLog)) {
             // set the owning side to null (unless already changed)
-            if ($fichier->getUser() === $this) {
-                $fichier->setUser(null);
+            if ($loginLog->getUser() === $this) {
+                $loginLog->setUser(null);
             }
         }
 
