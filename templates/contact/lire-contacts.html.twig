@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ parent() }}Accueil
+    {{ parent() }} - Accueil
 {% endblock %}
 
 {% block body %}
@@ -10,24 +10,30 @@
             Accueil
         </h1>
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8 bg-type p-4 m-0 text-primary">
+            <div class="col-12 col-md-8 bg-light p-4 m-0 text-primary shadow-sm rounded">
                 <div class="table-responsive">
                     <table class="table table-hover">
-                        <thead>
+                        <thead class="table-light">
                             <tr class="fw-bold text-primary">
-                                <th scope="col" class="text-primary">Nom</th>
-                                <th scope="col" class="text-primary">Message</th>
-                                <th scope="col" class="text-primary">Email</th>
-                                <th scope="col" class="text-primary">Date d'envoi</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Message</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Date d'Envoi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="table-primary">
-                                <td class="text-primary">{{ contact.nom | capitalize }}</td>
-                                <td class="text-primary">{{ contact.message | lower }}</td>
-                                <td class="text-primary">{{ contact.email | lower }}</td>
-                                <td class="text-primary">{{ contact.dateEnvoi | date("d-m-Y à H:i:s") }}</td>
-                            </tr>
+                            {% if contact %}
+                                <tr class="table-primary">
+                                    <td>{{ contact.nom | capitalize }}</td>
+                                    <td>{{ contact.message | lower }}</td>
+                                    <td>{{ contact.email | lower }}</td>
+                                    <td>{{ contact.dateEnvoi | date("d-m-Y à H:i:s") }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center">Aucun contact trouvé.</td>
+                                </tr>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>

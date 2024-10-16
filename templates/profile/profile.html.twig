@@ -1,57 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    {{ parent() }}Profil
-{% endblock %}
+{% block title %}Profil Utilisateur{% endblock %}
 
 {% block body %}
     <div class="container-fluid">
-        <h1 class="text-center text-primary mt-4 pt-4 display-1 fw-bold">Profil</h1>
+        <h1 class="text-center text-primary mt-4 pt-4 display-1 fw-bold">Mon Profil</h1>
         <div class="row justify-content-center">
-            <div class="col-12 col-md-6 bg-white p-4 m-0 text-primary">
-                <table class="table">
-                    <tbody>
-                        {% if user is not null %}
-                            <tr>
-                                <th>Email :</th>
-                                <td>{{ user.email }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nom :</th>
-                                <td>{{ user.nom }}</td>
-                            </tr>
-                            <tr>
-                                <th>Prénom :</th>
-                                <td>{{ user.prenom }}</td>
-                            </tr>
-                            <tr>
-                                <th>Date d'inscription :</th>
-                                <td>{{ user.dateEnvoi | date('d-m-Y H:i:s') }}</td>
-                            </tr>
-                            <tr>
-                                <th>Rôle :</th>
-                                <td>
-                                    {% if 'ROLE_MOD' in user.roles %}
-                                        Modérateur
-                                    {% else %}
-                                        Utilisateur normal
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="text-center">
-                                    <form action="{{ path('app_delete_account') }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ?');">
-                                        <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="2">Utilisateur non connecté</td>
-                            </tr>
-                        {% endif %}
-                    </tbody>
-                </table>
+            <div class="col-12 col-md-8 bg-light p-5 rounded shadow">
+                <h2 class="text-center">Détails du Profil</h2>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item"><strong>Nom:</strong> {{ user.nom }}</li>
+                    <li class="list-group-item"><strong>Prénom:</strong> {{ user.prenom }}</li>
+                    <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+                </ul>
+                <div class="text-center">
+                    <form method="POST" action="{{ path('app_delete_account') }}">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete_account') }}">
+        <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
+    </form>
+                </div>
             </div>
         </div>
     </div>
