@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class FichierController extends AbstractController
 {
-    #[Route('/ajout-fichier', name: 'app_ajout_fichier')]
+    #[Route('/private-ajout-fichier', name: 'app_ajout_fichier')]
     public function index(Request $request, EntityManagerInterface $em): Response
     {
         $fichier = new Fichier();

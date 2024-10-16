@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ScategorieController extends AbstractController
 {
-    #[Route('/ajout-scategorie', name: 'app_ajout_scategorie')]
+    #[Route('/private-ajout-scategorie', name: 'app_ajout_scategorie')]
     public function ajouterScategorie(Request $request, EntityManagerInterface $entityManager): Response
     {
         $scategorie = new Scategorie();
@@ -64,4 +64,26 @@ class ScategorieController extends AbstractController
             'scategories' => $scategories,
         ]);
     }
+
+    #[Route('/private-supprimer-sous_categorie/{id}', name: 'app_supprimer_sous_categorie')]
+public function supprimerCategorie(Request $request, Scategorie $scategorie, EntityManagerInterface $entityManager): Response
+{
+    // Vérifie le token CSRF pour éviter les attaques CSRF
+    if ($this->isCsrfTokenValid('delete' . $scategorie->getId(), $request->request->get('_token'))) {
+        try {
+            // Supprime la sous-catégorie
+            $entityManager->remove($scategorie);
+            $entityManager->flush();
+            $this->addFlash('success', 'Sous-catégorie supprimée avec succès');
+        } catch (\RuntimeException $e) {
+            // Gère les exceptions et ajoute un message d'erreur
+            $this->addFlash('error', $e->getMessage());
+        }
+    } else {
+        $this->addFlash('error', 'Token CSRF invalide.');
+    }
+
+    // Redirige vers la liste des sous-catégories après la suppression
+    return $this->redirectToRoute('scategorie_liste');
+}
 }

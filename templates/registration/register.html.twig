@@ -33,15 +33,27 @@
                         'attr': {'class': 'form-control', 'placeholder': 'Votre mot de passe (Min 6 caractères)'}
                     }) }}
                 </div>
+                
                 <div class="form-check mb-3">
                     {{ form_row(registrationForm.agreeTerms, {
                         'label': 'J\'accepte les termes',
                         'attr': {'class': 'form-check-input'},
                     }) }}
                 </div>
+
+                <!-- Ajout de la case à cocher pour le consentement des données -->
+                <div class="form-check mb-3">
+                    {{ form_row(registrationForm.dataConsent, {
+                        'label': 'J\'accepte que mes données soient utilisées conformément à la politique de confidentialité.',
+                        'attr': {'class': 'form-check-input'},
+                    }) }}
+                </div>
+
+                <!-- Bouton d'inscription -->
                 <div class="text-center">
                     <button type="submit" class="btn btn-lg btn-primary mt-3">S'inscrire</button>
                 </div>
+                
                 {{ form_end(registrationForm) }}
             </div>
         </div>

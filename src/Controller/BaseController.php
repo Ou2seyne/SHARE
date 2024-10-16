@@ -36,7 +36,7 @@ return $this->render('base/propos.html.twig', [
 ]);
 }
 
-#[Route('/contact', name: 'app_contact')]
+#[Route('/private-contact', name: 'app_contact')]
  public function contact(Request $request, EntityManagerInterface $em): Response
  {
  $contact = new Contact();
@@ -59,7 +59,7 @@ return $this->render('base/propos.html.twig', [
 
 
 
-    #[Route('/categorie', name: 'app_categorie')]
+    #[Route('/private-categorie', name: 'app_categorie')]
     public function categorie(Request $requestt,EntityManagerInterface $ems): Response
     {
     $categorie = new Categorie();
